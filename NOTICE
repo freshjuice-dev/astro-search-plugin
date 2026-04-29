@@ -1,0 +1,33 @@
+@freshjuice/astro-search-plugin
+Copyright 2026 Alex Zappa / FreshJuice (https://freshjuice.dev/)
+
+This product includes software developed by FreshJuice
+(https://freshjuice.dev/) and contributors.
+
+================================================================================
+THIRD-PARTY ATTRIBUTIONS
+================================================================================
+
+This software builds upon and depends on the following open source project:
+
+--------------------------------------------------------------------------------
+Orama
+--------------------------------------------------------------------------------
+
+This package is a third-party Astro integration for the Orama search engine
+(https://github.com/oramasearch/orama). All search functionality is powered
+by Orama at runtime.
+
+  Copyright OramaSearch Inc.
+  Licensed under the Apache License, Version 2.0
+  https://github.com/oramasearch/orama/blob/main/LICENSE.md
+
+This package is NOT affiliated with, endorsed by, or sponsored by
+OramaSearch Inc. "Orama" is a trademark of OramaSearch Inc.; this package
+references the name solely to describe what library it integrates with,
+under nominative fair use.
+
+For the official Orama Astro integration, see @orama/plugin-astro
+(https://www.npmjs.com/package/@orama/plugin-astro).
+
+================================================================================

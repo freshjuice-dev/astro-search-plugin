@@ -1,0 +1,112 @@
+{
+  "name": "@freshjuice/astro-search-plugin",
+  "version": "1.0.0",
+  "description": "Framework-agnostic, type-safe search for Astro 5+ powered by Orama. Build the index at build time, query it client-side, drop in a Cmd+K palette as a web component (vanilla, Vue, Svelte, Solid…) or React component. Apache-2.0, no runtime CDN, no telemetry.",
+  "keywords": [
+    "astro",
+    "astro-integration",
+    "astro-component",
+    "search",
+    "search-plugin",
+    "orama",
+    "fulltext",
+    "fulltext-search",
+    "static-search",
+    "command-palette",
+    "cmd-k",
+    "web-component",
+    "custom-element",
+    "framework-agnostic",
+    "react",
+    "vue",
+    "svelte",
+    "freshjuice"
+  ],
+  "homepage": "https://github.com/freshjuice-dev/astro-search-plugin#readme",
+  "bugs": {
+    "url": "https://github.com/freshjuice-dev/astro-search-plugin/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freshjuice-dev/astro-search-plugin.git"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "FreshJuice",
+    "email": "contact@freshjuice.dev",
+    "url": "https://freshjuice.dev/"
+  },
+  "contributors": [
+    {
+      "name": "Alex Zappa",
+      "email": "alex@zappa.dev",
+      "url": "https://alex.zappa.dev/"
+    }
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./build": {
+      "types": "./dist/build.d.ts",
+      "import": "./dist/build.js"
+    },
+    "./core": {
+      "types": "./dist/core.d.ts",
+      "import": "./dist/core.js"
+    },
+    "./element": {
+      "types": "./dist/element.d.ts",
+      "import": "./dist/element.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "NOTICE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsup && cp src/components/styles.css dist/styles.css",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@orama/orama": "^3.0.0"
+  },
+  "peerDependencies": {
+    "astro": ">=5.0.0",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": { "optional": true },
+    "react-dom": { "optional": true }
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

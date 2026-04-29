@@ -1,0 +1,16 @@
+src
+tsconfig.json
+tsup.config.ts
+.gitignore
+.github
+.vscode
+.idea
+.editorconfig
+node_modules
+*.log
+.env*
+coverage
+examples
+tests
+*.test.*
+*.spec.*
