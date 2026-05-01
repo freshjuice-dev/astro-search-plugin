@@ -79,7 +79,7 @@ export class SearchPaletteElement extends HTMLElement {
     if (this.isOpen) return;
     this.isOpen = true;
     this.ensureLoaded();
-    this.render();
+    this.renderShell();
     requestAnimationFrame(() => {
       this.querySelector<HTMLInputElement>("input[type='search']")?.focus();
     });
@@ -90,7 +90,7 @@ export class SearchPaletteElement extends HTMLElement {
     this.query = "";
     this.results = [];
     this.selectedIndex = 0;
-    this.render();
+    this.renderShell();
   }
   toggle() {
     this.isOpen ? this.hide() : this.show();
@@ -102,7 +102,7 @@ export class SearchPaletteElement extends HTMLElement {
     window.addEventListener("astro-search:open", this.onOpen);
     window.addEventListener("astro-search:close", this.onClose);
     window.addEventListener("astro-search:toggle", this.onToggle);
-    this.render();
+    this.renderShell();
   }
   disconnectedCallback() {
     window.removeEventListener("keydown", this.onWindowKeydown);
@@ -111,7 +111,7 @@ export class SearchPaletteElement extends HTMLElement {
     window.removeEventListener("astro-search:toggle", this.onToggle);
   }
   attributeChangedCallback() {
-    if (this.isOpen) this.render();
+    if (this.isOpen) this.renderShell();
   }
 
   // Helpers
@@ -131,7 +131,7 @@ export class SearchPaletteElement extends HTMLElement {
     this.dbPromise = loadIndex(this.attr.indexUrl);
     try {
       this.db = await this.dbPromise;
-      this.render();
+      this.renderResults();
     } catch (e) {
       console.error("[astro-search-palette]", e);
     }
@@ -143,7 +143,7 @@ export class SearchPaletteElement extends HTMLElement {
       limit: this.attr.resultLimit,
     });
     this.selectedIndex = 0;
-    this.render();
+    this.renderResults();
   }
 
   private handleGlobalKey(e: KeyboardEvent) {
@@ -198,14 +198,18 @@ export class SearchPaletteElement extends HTMLElement {
     this.hide();
   }
 
-  private render() {
+  /**
+   * Renders the modal shell (backdrop + input + footer). Called once per
+   * open/close — NOT on every search, so the <input> element keeps its
+   * focus and selection state while the user types.
+   */
+  private renderShell() {
     if (!this.isOpen) {
       this.innerHTML = "";
       return;
     }
 
-    const { placeholder, groupBy } = this.attr;
-    const grouped = groupBy ? groupResults(this.results, groupBy) : null;
+    const { placeholder } = this.attr;
 
     this.innerHTML = /* html */ `
       <div class="astro-search-backdrop" role="dialog" aria-modal="true" aria-label="Search">
@@ -219,7 +223,7 @@ export class SearchPaletteElement extends HTMLElement {
                    autocomplete="off" spellcheck="false" />
             <kbd class="astro-search-shortcut">esc</kbd>
           </div>
-          <ul class="astro-search-results">${this.renderResults(grouped)}</ul>
+          <ul class="astro-search-results"></ul>
           <div class="astro-search-footer">
             <span class="astro-search-key"><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
             <span class="astro-search-key"><kbd>↵</kbd> open</span>
@@ -229,7 +233,6 @@ export class SearchPaletteElement extends HTMLElement {
       </div>
     `;
 
-    // Wire up handlers (event delegation off the root for click/mouseenter)
     const backdrop = this.querySelector(".astro-search-backdrop");
     backdrop?.addEventListener("click", (e) => {
       if (e.target === backdrop) this.hide();
@@ -243,7 +246,22 @@ export class SearchPaletteElement extends HTMLElement {
     });
     input.addEventListener("keydown", this.handleInputKey);
 
-    this.querySelectorAll<HTMLButtonElement>(".astro-search-result").forEach(
+    this.renderResults();
+  }
+
+  /**
+   * Updates only the <ul.astro-search-results> contents. Leaves the input
+   * (and its focus) untouched.
+   */
+  private renderResults() {
+    const ul = this.querySelector<HTMLElement>(".astro-search-results");
+    if (!ul) return;
+
+    const { groupBy } = this.attr;
+    const grouped = groupBy ? groupResults(this.results, groupBy) : null;
+    ul.innerHTML = this.resultsHtml(grouped);
+
+    ul.querySelectorAll<HTMLButtonElement>(".astro-search-result").forEach(
       (btn, i) => {
         btn.addEventListener("click", () => {
           this.selectedIndex = i;
@@ -257,7 +275,7 @@ export class SearchPaletteElement extends HTMLElement {
     );
   }
 
-  private renderResults(
+  private resultsHtml(
     grouped: [string, SearchResult[]][] | null,
   ): string {
     if (!this.db && this.dbPromise) {

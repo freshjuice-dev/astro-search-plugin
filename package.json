@@ -1,6 +1,6 @@
 {
   "name": "@freshjuice/astro-search-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Framework-agnostic, type-safe search for Astro 5+ powered by Orama. Build the index at build time, query it client-side, drop in a Cmd+K palette as a web component (vanilla, Vue, Svelte, Solid…) or React component. Apache-2.0, no runtime CDN, no telemetry.",
   "keywords": [
     "astro",

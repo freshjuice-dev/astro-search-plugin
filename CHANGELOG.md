@@ -5,6 +5,11 @@ All notable changes to `@freshjuice/astro-search-plugin` will be documented in t
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] — 2026-05-02
+
+### Fixed
+- `<astro-search-palette>` lost input focus after the first keystroke. The component re-rendered the entire modal on every search, destroying the `<input>` element so the second character had nowhere to land. Split rendering into `renderShell()` (called on open/close) and `renderResults()` (called on each query) so the input keeps its focus and selection while typing. The React adapter was unaffected.
+
 ## [1.0.0] — 2026-04-29
 
 Initial public release. Tested end-to-end against Astro 6 + React 19 powering search across the [freshjuice.dev](https://freshjuice.dev/) site (93 documents — blog posts, tools, authors).
@@ -46,4 +51,5 @@ Initial public release. Tested end-to-end against Astro 6 + React 19 powering se
 - Tested against Astro 5 and 6, React 18 and 19.
 - Index for ~100 documents weighs ~250–300 KB serialized JSON.
 
+[1.0.1]: https://github.com/freshjuice-dev/astro-search-plugin/releases/tag/v1.0.1
 [1.0.0]: https://github.com/freshjuice-dev/astro-search-plugin/releases/tag/v1.0.0
