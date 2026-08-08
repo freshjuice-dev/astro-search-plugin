@@ -1,5 +1,6 @@
 # @freshjuice/astro-search-plugin
 
+> ⚠️ PRIVATE REPOSITORY — Proprietary and confidential. See [LICENSE](LICENSE).
 > Framework-agnostic, type-safe search for Astro 5+, powered by [Orama]. Build the index at build time, query it client-side, drop in a Cmd+K command palette as a web component (works in Vue, Svelte, Solid, Lit, Preact, vanilla HTML — anywhere), or as a React component. Apache-2.0. No runtime CDN. No telemetry.
 
 [![npm version](https://img.shields.io/npm/v/@freshjuice/astro-search-plugin.svg)](https://www.npmjs.com/package/@freshjuice/astro-search-plugin)
